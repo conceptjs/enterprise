@@ -1,0 +1,38 @@
+{
+  "uri" : "local://L_8Zs81lRW9TbqoMAge_m6/",
+  "name" : "Reset Password",
+  "category" : "",
+  "parent" : "local://k1mDMY-lHOA7Ja5KhTYZiB/",
+  "flags" : "U",
+  "lvars" : [ ],
+  "vars" : [ {
+    "name" : "htmlTemplate",
+    "expr" : {
+      "str" : "<html>\n    <head>\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"//fonts.googleapis.com/css?family=Raleway:300normal,400normal,600normal\" />\n        <link rel=\"stylesheet\" href=\"/resource/emci/emovera/H-2iBzOU8zA9UalxsPWkaB/\">\n        \n        <script type=\"text/javascript\" src=\"js/cryptoJS/rollups/md5.js\"></script>\n        \n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\" />\n        \n        <meta name=\"cjsSaveMode\" content=\"auto\">\n    </head>\n    \n    <body>\n        <div class=\"container-fluid\">\n            <div class=\"row text-center emci-header\">\n                <div class=\"col-sm-3 col-md-2 col-lg-1\">\n                </div>\n                <div class=\"col-sm-6 col-md-8 col-lg-10\">\n                    <div class=\"header-title\">\n                        Reset Password\n                    </div>\n                </div>\n            </div>\n            <div class=\"row text-center instructions\">\n                <div class=\"col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2\">\n                    <div class=\"instructions-text\" data-bind=\"text: instructionText\">\n                        Enter new password below to reset your Emovera account password. \n                    </div>\n                </div>\n            </div>\n            <div class=\"row text-center main-question\">\n                <div class=\"col-sm-12\"><input type=\"password\" class=\"form-control\" id=\"pass\" placeholder=\"Enter new password\" data-bind=\"textInput: pass, visible: !resetResp()\"></div>\n                <div class=\"col-sm-12\"><input type=\"password\" class=\"form-control\" id=\"verifyPass\" placeholder=\"Re-enter new password\" data-bind=\"textInput: verifyPass, visible: !resetResp()\"></div>\n            </div>\n            <div class=\"row text-center main-action\">\n                <button id=\"goBtn\" type=\"button\" class=\"btn btn-emci btn-primary-emci\" data-bind=\"click: resetPass, visible: showBtn() && !resetResp()\">\n                    Submit\n                </button>\n            </div>\n        </div>\n        \n        <script>\n            var loc = $cjs.location();\n            var userUUID = loc.param(\"key\");\n            var oldPassHash = loc.param(\"oldPass\");\n            \n            function getPassHash(pass){\n                return CryptoJS.MD5(pass).toString();\n            }\n            \n            function ResetPassVM(){\n                var self = this;\n                \n                this.pass = ko.observable(\"\");\n                \n                this.verifyPass = ko.observable(\"\");\n                \n                this.instructionText = ko.observable(\"Enter new password below to reset your Emovera account password.\");\n                this.resetResp = ko.observable(false);\n                \n                this.validatePass = ko.computed(function(){\n                    if (this.pass() && this.verifyPass() && this.pass() == this.verifyPass()){\n                        return true;\n                    }else{\n                        return false;\n                    }\n                }, this);\n\n                this.showBtn = ko.computed(function() { return this.validatePass(); }, this);\n                \n                this.resetPass = function(){\n                    if (!self.validatePass() || !userUUID || !oldPassHash){\n                        console.log(\"error: password not valid or userUUID/oldPassHash is null\");\n                        self.resetResp(true);\n                        self.instructionText(\"user UUID or old password hash is null!\");\n                        return;\n                    }\n                    \n                    var newPassHash = getPassHash(self.pass());\n                    $cjs.custom.emovera.updateUserPass({\n                        userUUID: userUUID, \n                        oldPassHash: oldPassHash, \n                        newPassHash: newPassHash, \n                        successFn: function(response){\n                            self.resetResp(true);\n                            self.instructionText(\"Your Emovera Account password has been successfully reset!\");\n                        },\n                        failFn: function(jqXHR, textStatus, errorThrown){\n                            console.log(\"resetPassword failed, status:\" + textStatus + \", error:\" + errorThrown + \", server response:\" + ((jqXHR.responseText)?jqXHR.responseText:\"\"));\n                            self.resetResp(true);\n                            if (jqXHR.responseJSON){\n                                if (jqXHR.responseJSON.errorCode == \"USER_MISSING\"){\n                                    self.instructionText(\"Invalid user UUID!\");\n                                }else if (jqXHR.responseJSON.errorCode == \"PASSWORD_MISMATCH\"){\n                                    self.instructionText(\"Old password hash doesn't match!\");\n                                }else{\n                                    self.instructionText(\"Failed to reset password!\");\n                                }\n                            }\n                        }\n                    });\n                }\n            }\n            \n            $(function(){\n                var resetPassVM = new ResetPassVM();\n                ko.applyBindings(resetPassVM);\n            })\n        </script>\n    </body>\n</html>",
+      "strEditMode" : "html",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "_page_propertyMap",
+    "expr" : {
+      "script" : "return {anchorUri: home.anchor().uri()};",
+      "type" : "SCRIPT"
+    }
+  }, {
+    "name" : "page",
+    "expr" : {
+      "concept" : "/common/core/Xfh2VQ4HSK9klqbqqR-eBB/",
+      "bindings" : {
+        "htmlTemplate" : "htmlTemplate",
+        "propertyMap" : "_page_propertyMap"
+      },
+      "type" : "CONCEPT"
+    }
+  } ],
+  "isas" : [ {
+    "var" : "page"
+  } ],
+  "encodedidxhash" : "",
+  "isLambda" : false,
+  "activeScript" : ""
+}

@@ -1,0 +1,30 @@
+{
+  "uri" : "local://xIRCmTMXuB8oSq-xF7XoVC/",
+  "name" : "Study Respondent Import Concept",
+  "category" : "",
+  "parent" : "local://k1mDMY-lHOA7Ja5KhTYZiB/",
+  "flags" : "U",
+  "lvars" : [ ],
+  "vars" : [ {
+    "name" : "html",
+    "expr" : {
+      "str" : "<html>\n    <head>\n    </head>\n    <body>\n        <h3 style=\"text-align:center\" id=\"errorMsg\"></h3>\n        <script>\n            $(function(){\n\t\t        var curUrl = $cjs.location();\n\t\t        \n\t\t        var userEmailOrID = curUrl.param(\"userEmailOrID\");\n\t\t        if (!userEmailOrID){\n\t\t            userEmailOrID = 'xxxxxx'.replace(/x/g, function(c) { return ((Math.random()*16)%16 | 0).toString(16); });\n\t\t        }\n\t\t        \n\t\t        var studyUri = curUrl.param(\"studyUri\");\n\t\t        if (!studyUri){\n\t\t            $(\"#errorMsg\").text(\"studyUri is missing in url\");\n\t\t            return;\n\t\t        }\n\t\t        \n\t\t        var segments = curUrl.param(\"segments\");\n\t\t        //if (!segments){\n\t\t            //$(\"#errorMsg\").text(\"segments is missing in url\");\n\t\t            //return;\n\t\t        //}\n\t\t        \n\t\t        var respondent = { \"userEmailOrID\": userEmailOrID};\n\t\t        if (segments){\n\t\t            _.each(segments.split(\",\"), function(x){\n\t\t                var segment = x.split(\":\");\n\t\t                if (segment[0] && segment[1]){\n\t\t                    respondent[segment[0]] = segment[1];\n\t\t                }\n\t\t            });\n\t\t        }\n\t\t            \n\t\t        $cjs(\"/emci/enterprise/5--vDjc5TV8s54gqKZXjk0/\").execute(\"validateStudySegments\", [studyUri, respondent],\n\t\t            function(data){\n\t\t                if (data){\n\t\t                    $(\"#errorMsg\").text(data);\n\t\t                    return;\n\t\t                }else{\n\t\t                    $cjs(\"/emci/enterprise/5--vDjc5TV8s54gqKZXjk0/\").execute(\"createOrUpdateRespondent\", [studyUri, respondent],\n\t\t                        function(respondentUri){\n\t\t                            if (respondentUri){\n\t\t                                $cjs.redirect(\"/view/emci/enterprise/q8-yF-SDqmBB-KXCuFQCK3/?respondentUri=\" + encodeURIComponent(respondentUri), \"_self\", \"ANY\");\n\t\t                            }\n\t\t                        },\n                                function(jqXHR, textStatus, errorThrown){\n                                    console.log(\"execute proxy method createOrUpdateRespondent failed, status:\" + textStatus + \", error:\" + errorThrown + \", server response:\" + ((jqXHR.responseText)?jqXHR.responseText:\"\"));\n                                }\n                            );\n\t\t                }\n\t\t            },\n                    function(jqXHR, textStatus, errorThrown){\n                        console.log(\"execute proxy method validateStudySegments failed, status:\" + textStatus + \", error:\" + errorThrown + \", server response:\" + ((jqXHR.responseText)?jqXHR.responseText:\"\"));\n                    }\n                );\n\t\t        \n            });\n        </script>\n    </body>\n</html>",
+      "strEditMode" : "html",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "page",
+    "expr" : {
+      "concept" : "/common/core/iduwOQ2KZv8MWqamwqb6AE/",
+      "bindings" : {
+        "html" : "html"
+      },
+      "type" : "CONCEPT"
+    }
+  } ],
+  "isas" : [ {
+    "var" : "page"
+  } ],
+  "encodedidxhash" : "",
+  "isLambda" : false
+}

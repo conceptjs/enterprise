@@ -1,0 +1,38 @@
+{
+  "uri" : "local://uxUpC1c3wCA8P48veXqVA2/",
+  "name" : "Hand Soap Topic Response Generator",
+  "category" : "",
+  "parent" : "local://JoSfA4Q_mk982Khzs4k1b1/",
+  "flags" : "U",
+  "lvars" : [ ],
+  "vars" : [ {
+    "name" : "topic",
+    "expr" : {
+      "str" : "using hand soap",
+      "strEditMode" : "",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "study",
+    "expr" : {
+      "str" : "Vegas MKM 03-2016",
+      "strEditMode" : "",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "generator",
+    "expr" : {
+      "concept" : "/emci/emovera/7uje674vY6AvBa8gNkiR83/",
+      "bindings" : {
+        "topic" : "topic",
+        "study" : "study"
+      },
+      "type" : "CONCEPT"
+    }
+  } ],
+  "isas" : [ {
+    "var" : "generator"
+  } ],
+  "encodedidxhash" : "",
+  "isLambda" : false
+}

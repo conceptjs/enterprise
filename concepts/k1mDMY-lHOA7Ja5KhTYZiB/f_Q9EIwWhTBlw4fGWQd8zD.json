@@ -1,0 +1,38 @@
+{
+  "uri" : "local://f_Q9EIwWhTBlw4fGWQd8zD/",
+  "name" : "New Question",
+  "category" : "",
+  "parent" : "local://k1mDMY-lHOA7Ja5KhTYZiB/",
+  "flags" : "U",
+  "lvars" : [ ],
+  "vars" : [ {
+    "name" : "htmlTemplate",
+    "expr" : {
+      "str" : "<html>\n    <head>\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"//fonts.googleapis.com/css?family=Raleway:300normal,400normal,600normal\" />\n        <link rel=\"stylesheet\" href=\"/resource/emci/emovera/H-2iBzOU8zA9UalxsPWkaB/\">\n        \n        <meta name=\"cjsSaveMode\" content=\"auto\">\n    </head>\n    \n    <body>\n        <div class=\"container-fluid\">\n            <div class=\"row text-center emci-header\">\n<!--                <div class=\"col-sm-3 col-md-2 col-lg-1\">\n                    <img style=\"display: inline-block\" src=\"http://ww1.prweb.com/prfiles/2016/01/06/13152418/gI_59743_Martec%20Emotion%20Mining%20logos.png\" height=\"65px\">\n                </div>\n-->\n                <div class=\"col-sm-12\">\n                    <div class=\"header-title\">\n                        Welcome to Emotion Mining!\n                    </div>\n                </div>\n            </div>\n            <div class=\"row text-center instructions\">\n                <div class=\"col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2\">\n                    <div class=\"instructions-text\">\n                        To get started, please choose a topic that interests you. We will email back your results after you finish the exercise. \n                    </div>\n                </div>\n            </div>\n            <div class=\"row text-center main-question\">\n                <div class=\"col-sm-12\">How does</div>\n                <div class=\"col-sm-12\"><input type=\"text\" class=\"form-control\" id=\"topic\" placeholder=\"your topic\" data-bind=\"textInput: topic\"></div>\n                <div class=\"col-sm-12\">make you feel?</div>\n            </div>\n            <div class=\"row text-center main-email\">\n                <div class=\"col-sm-12\">Send results to</div>\n                <div class=\"col-sm-12\"><input type=\"text\" class=\"form-control\" id=\"userEmail\" placeholder=\"your email address\" data-bind=\"textInput: email\"></div>\n            </div>\n            <div class=\"row text-center main-action\">\n                <button id=\"goBtn\" type=\"button\" class=\"btn btn-emci btn-primary-emci\" data-bind=\"click: goClick, visible: showBtn\">\n                    START <span class=\"fa fa-arrow-right\"></span>\n                </button>\n            </div>\n        </div>\n        \n        <script>\n            function IndexVM(){\n                var self = this;\n                \n                this.topic = ko.observable(\"\");\n                \n                this.email = ko.observable(\"\");\n\n                this.showBtn = ko.computed(function() { return (this.topic().length > 0) && (this.email().length > 0); }, this);\n                \n                this.goClick = function(){\n                    if (!(self.topic().trim()) || !(self.email().trim())){\n                        alert(\"topic or email cannot be empty\");\n                        return;\n                    }\n                    $cjs('{{{anchorUri}}}').execute('addNewQuestion', [self.topic(), self.email()], \n                        function(uri){                    \n                            if (uri){\n                                $cjs.redirect(\"https://insights.emotionmining.co/view\" + uri, \"_blank\", \"ANY\");\n                            }\n                        },\n                        function(jqXHR, textStatus, errorThrown){\n                            console.log(\"execute proxy method addNewQuestion failed, status:\" + textStatus + \", error:\" + errorThrown + \", server response:\" + ((jqXHR.responseText)?jqXHR.responseText:\"\"));\n                        });\n                }\n            }\n            \n            $(function(){\n                var indexVM = new IndexVM();\n                ko.applyBindings(indexVM);\n            })\n        </script>\n    </body>\n</html>",
+      "strEditMode" : "html",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "_page_propertyMap",
+    "expr" : {
+      "script" : "return {anchorUri: home.anchor().uri()};",
+      "type" : "SCRIPT"
+    }
+  }, {
+    "name" : "page",
+    "expr" : {
+      "concept" : "/common/core/Xfh2VQ4HSK9klqbqqR-eBB/",
+      "bindings" : {
+        "htmlTemplate" : "htmlTemplate",
+        "propertyMap" : "_page_propertyMap"
+      },
+      "type" : "CONCEPT"
+    }
+  } ],
+  "isas" : [ {
+    "var" : "page"
+  } ],
+  "encodedidxhash" : "",
+  "isLambda" : false,
+  "activeScript" : "{\n    findVar:function(concDef, varName){\n\t    return _.find(concDef.vars, {\n\t\t    \"name\" : varName\n\t    });\n    },\n    \n    addNewQuestion:function(topic, email, study, username, studyUri, studyOrder, studyRespondentUri){\n        var topicResponseDef = $cjs.def(\"/emci/emovera/_jXkLs_-sf9NYKVcAwwnZ3/\");\n        topicResponseDef.parent = \"/emci/enterprise/g_Q9gMCWjQAQO4DTyeV4_4/\";\n        topicResponseDef.name = topic;\n            \n        findVar(topicResponseDef, \"topic\").expr.str = topic;\n        findVar(topicResponseDef, \"_response_userEmail\").expr.str = email;\n        findVar(topicResponseDef, \"_response_status\").expr.str = \"Not Completed\";\n        if (username){\n            findVar(topicResponseDef, \"_response_userName\").expr.str = username;\n        }\n        if (study){\n            findVar(topicResponseDef, \"_response_study\").expr.str = study;\n        }\n        if (studyUri){\n            findVar(topicResponseDef, \"_response_studyUri\").expr.str = studyUri;\n        }\n        if (studyOrder){\n            findVar(topicResponseDef, \"_response_studyOrder\").expr.num = studyOrder;\n        }\n        if (studyRespondentUri){\n            findVar(topicResponseDef, \"_response_studyRespondentUri\").expr.str = studyRespondentUri;\n        }\n            \n        return $cjs.copyConcDef({\n    \t\t    concept: topicResponseDef\n        });\n        \n        /*\n        var newQuestion = $cjs.copyConcept({\n            puri: \"/emci/enterprise/g_Q9gMCWjQAQO4DTyeV4_4/\", // Data Folder\n    \t\tcuri: \"/emci/emovera/_jXkLs_-sf9NYKVcAwwnZ3/\", // Question Template\n    \t\tnewName: topic,\n    \t\tdeepCopy: false\n    \t});\n    \t\n    \tnewQuestion.prop(\"topic\", topic);\n    \tnewQuestion.prop(\"response\").prop(\"userEmail\", email);\n    \tnewQuestion.prop(\"response\").prop(\"status\", \"Not Completed\");\n    \tif (username){\n    \t    newQuestion.prop(\"response\").prop(\"userName\", username);\n    \t}\n    \tif (study){\n    \t    newQuestion.prop(\"response\").prop(\"study\", study);\n    \t}\n    \t\n    \treturn newQuestion.uri();\n    \t*/\n    \t\n    }\n}"
+}

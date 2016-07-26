@@ -1,0 +1,50 @@
+{
+  "uri" : "local://VSWcS8GaO48v-qOZD-wzaD/",
+  "name" : "englishdict.txt",
+  "category" : "",
+  "parent" : "local://z5Onwn12bT8Hga4HpMGJCA/",
+  "flags" : "U",
+  "lvars" : [ ],
+  "vars" : [ {
+    "name" : "type",
+    "expr" : {
+      "str" : "text/csv",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "attachmentLink",
+    "expr" : {
+      "str" : "db://emci/42af292e-6a1f-41a9-902d-96ed3f379bca/",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "filename",
+    "expr" : {
+      "str" : "englishdict.txt",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "maxAge",
+    "expr" : {
+      "num" : 0,
+      "type" : "NUMBER"
+    }
+  }, {
+    "name" : "resource",
+    "expr" : {
+      "concept" : "/common/core/BLTv0pGnFoAPG4Q4YV8KS1/",
+      "bindings" : {
+        "type" : "type",
+        "attachmentLink" : "attachmentLink",
+        "filename" : "filename",
+        "maxAge" : "maxAge"
+      },
+      "type" : "CONCEPT"
+    }
+  } ],
+  "isas" : [ {
+    "var" : "resource"
+  } ],
+  "encodedidxhash" : "",
+  "isLambda" : false
+}

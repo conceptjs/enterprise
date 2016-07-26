@@ -1,0 +1,38 @@
+{
+  "uri" : "local://Hp_YrycEOpBTxKgZBOpCY8/",
+  "name" : "Sample Topic Response Generator",
+  "category" : "",
+  "parent" : "local://JoSfA4Q_mk982Khzs4k1b1/",
+  "flags" : "U",
+  "lvars" : [ ],
+  "vars" : [ {
+    "name" : "topic",
+    "expr" : {
+      "str" : "Sample Topic",
+      "strEditMode" : "",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "study",
+    "expr" : {
+      "str" : "Sample Study",
+      "strEditMode" : "",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "generator",
+    "expr" : {
+      "concept" : "/emci/emovera/7uje674vY6AvBa8gNkiR83/",
+      "bindings" : {
+        "topic" : "topic",
+        "study" : "study"
+      },
+      "type" : "CONCEPT"
+    }
+  } ],
+  "isas" : [ {
+    "var" : "generator"
+  } ],
+  "encodedidxhash" : "",
+  "isLambda" : false
+}

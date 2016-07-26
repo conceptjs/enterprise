@@ -1,0 +1,38 @@
+{
+  "uri" : "local://80AQTVfK4RARkqdz-caWt9/",
+  "name" : "emovera_tool.css",
+  "category" : "css",
+  "parent" : "local://1TpMgHmg0O9PLagcG7SSA2/",
+  "flags" : "U",
+  "lvars" : [ ],
+  "vars" : [ {
+    "name" : "cssContent",
+    "expr" : {
+      "str" : "/* CSS for emovera tool*/\n\n.divider{\n    border-bottom: 1px solid #ddd;\n}\n\n.study .row{\n    padding-top: 20px;\n}\n\n.inline {\n    display: inline;\n}\n\n.study button{\n    margin-left: 20px;\n}\n\n.study .topic i,\n.study .email i{\n    padding-top: 10px;\n}",
+      "strEditMode" : "css",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "_cssResource_fileName",
+    "expr" : {
+      "str" : "emovera_tool.css",
+      "strEditMode" : "",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "cssResource",
+    "expr" : {
+      "concept" : "/common/core/D_CaDRd425Aqj4mtY9Oh1B/",
+      "bindings" : {
+        "css" : "cssContent",
+        "fileName" : "_cssResource_fileName"
+      },
+      "type" : "CONCEPT"
+    }
+  } ],
+  "isas" : [ {
+    "var" : "cssResource"
+  } ],
+  "encodedidxhash" : "",
+  "isLambda" : false
+}

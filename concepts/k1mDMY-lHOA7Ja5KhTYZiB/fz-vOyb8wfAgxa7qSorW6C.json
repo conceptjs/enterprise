@@ -1,0 +1,38 @@
+{
+  "uri" : "local://fz-vOyb8wfAgxa7qSorW6C/",
+  "name" : "New Topic",
+  "category" : "",
+  "parent" : "local://k1mDMY-lHOA7Ja5KhTYZiB/",
+  "flags" : "U",
+  "lvars" : [ ],
+  "vars" : [ {
+    "name" : "htmlTemplate",
+    "expr" : {
+      "str" : "<html>\n    <head>\n        <link rel=\"stylesheet\" href=\"/resource/emci/emovera/H-2iBzOU8zA9UalxsPWkaB/\">\n        \n        <meta name=\"cjsSaveMode\" content=\"auto\">\n    </head>\n    \n    <body id=\"cover-background\">\n        <div class=\"container-fluid\" id=\"question\">\n            <div class=\"row text-center\">\n                <h2 data-bind=\"text: topic\"></h2>\n            </div>\n            <div class=\"row text-center\">\n                <input type=\"text\" class=\"form-control\" id=\"userName\" placeholder=\"YOUR NAME\" data-bind=\"visible: !topicMissing(), value: userName\">\n            </div>\n            <div class=\"row text-center\">\n                <input type=\"text\" class=\"form-control\" id=\"userEmail\" placeholder=\"YOUR EMAIL ADDRESS\" data-bind=\"visible: !topicMissing(), value: email\">\n            </div>\n            <div class=\"row text-center\">\n                <button id=\"goBtn\" type=\"button\" class=\"btn btn-primary\" data-bind=\"visible: !topicMissing(), click: goClick\">\n                    <span class=\"fa fa-flag-checkered\"></span>&nbsp; Go &nbsp;<span data-bind=\"visible: submitted\" class=\"fa fa-spinner fa-spin\"></span>\n                </button>\n            </div>\n        </div>\n        \n        <div id=\"warningDialog\" tabindex=\"-1\" class=\"modal fade\" role=\"dialog\" data-bind=\"modal: warningDialog.showDialog\">\n            <div class=\"modal-dialog\" style=\"width: 50%\">\n                <div class=\"modal-content\">\n                    <div class=\"modal-header\">\n                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n                        <h4 class=\"modal-title\">Warning</h4>\n                    </div>\n\n                    <div class=\"modal-body warningMsg\" data-bind=\"if: showWarning\">\n                        <p><span data-bind=\"text : warningMsg\"></span></p>\n                    </div>\n\n                    <div class=\"modal-footer\">\n                        <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\" data-bind=\"visible : warningCloseBtn\"><span class=\"glyphicon glyphicon-remove\"></span> Close</button>\n                        <button type=\"button\" class=\"btn btn-primary\" data-bind=\"click: warningDialog.submit\"><span class=\"glyphicon glyphicon-ok\"></span> Ok</button>\n                    </div>\n                </div>\n            </div>\n        </div>\n        \n        <script>\n            function NewTopicVM(){\n                var self = this;\n                \n                this.topic = ko.observable(\"\");\n                this.userName = ko.observable(\"\");\n                this.email = ko.observable(\"\");\n                this.study = ko.observable(\"\");\n                \n                this.topicMissing = ko.observable();\n                this.submitted = ko.observable(false);\n                \n                this.goClick = function(){\n                    if (!(self.userName().trim()) || !(self.email().trim())){\n                        self.showWarningMsg(\"username or email cannot be empty\", false, null);\n                        return;\n                    }\n                    self.submitted(true);\n                    $cjs('{{{anchorUri}}}').execute('addNewQuestion', [self.topic(), self.email(), self.study(), self.userName(), \"\", 0], \n                        function(uri){                    \n                            if (uri){\n                                $cjs.redirect(uri);\n                            }\n                        },\n                        function(jqXHR, textStatus, errorThrown){\n                            console.log(\"execute proxy method addNewQuestion failed, status:\" + textStatus + \", error:\" + errorThrown + \", server response:\" + ((jqXHR.responseText)?jqXHR.responseText:\"\"));\n                        });\n                }\n                \n                this.warningDialog = new DialogVM();\n                this.warningMsg = ko.observable(\"\");\n                this.showWarning = ko.observable(false);\n                this.warningCloseBtn = ko.observable(false);\n    \n                this.showWarningMsg = function(msg, showCloseBtn, submitFn){\n                    self.warningMsg(msg);\n                    self.warningCloseBtn(showCloseBtn);\n                    self.showWarning(true);\n                    self.warningDialog.show(function(){\n                        if (submitFn){\n                            submitFn();\n                        }\n                        self.showWarning(false);\n                    });\n                }\n            }\n            \n            $(function(){\n                var newTopicVM = new NewTopicVM();\n                ko.applyBindings(newTopicVM);\n                \n                var location = $cjs.location();\n                var topic = location.param(\"topic\");\n                var study = location.param(\"study\");\n                if (!topic || !study){\n                    newTopicVM.showWarningMsg (\"Please pass your topic and study using the 'topic' and 'study' parameter in the url\", false, null);\n                    newTopicVM.topicMissing(true);\n                }else{\n                    newTopicVM.topicMissing(false);\n                }\n                newTopicVM.topic(topic);\n                newTopicVM.study(study);\n            })\n        </script>\n    </body>\n</html>",
+      "strEditMode" : "html",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "_page_propertyMap",
+    "expr" : {
+      "script" : "return {anchorUri: home.anchor().uri()};",
+      "type" : "SCRIPT"
+    }
+  }, {
+    "name" : "page",
+    "expr" : {
+      "concept" : "/common/core/Xfh2VQ4HSK9klqbqqR-eBB/",
+      "bindings" : {
+        "htmlTemplate" : "htmlTemplate",
+        "propertyMap" : "_page_propertyMap"
+      },
+      "type" : "CONCEPT"
+    }
+  } ],
+  "isas" : [ {
+    "var" : "page"
+  } ],
+  "encodedidxhash" : "",
+  "isLambda" : false,
+  "activeScript" : "{\n    addNewQuestion:function(topic, email, study, userName, studyUri, studyOrder){\n        var newQuestion = $cjs.copyConcept({\n            puri: \"/emci/enterprise/g_Q9gMCWjQAQO4DTyeV4_4/\", // Data Folder\n    \t\tcuri: \"/emci/emovera/_jXkLs_-sf9NYKVcAwwnZ3/\", // Question Template\n    \t\tnewName: topic,\n    \t\tdeepCopy: false\n    \t});\n    \t\n    \tnewQuestion.prop(\"topic\", topic);\n    \tnewQuestion.prop(\"response\").prop(\"userEmail\", email);\n    \tnewQuestion.prop(\"response\").prop(\"status\", \"Not Completed\");\n    \tif (study){\n    \t    newQuestion.prop(\"response\").prop(\"study\", study);\n    \t}\n    \tif (studyUri){\n    \t    newQuestion.prop(\"response\").prop(\"studyUri\", studyUri);\n    \t}\n    \tif (studyOrder){\n    \t    newQuestion.prop(\"response\").prop(\"studyOrder\", studyOrder);\n    \t}\n    \tif (userName){\n    \t    newQuestion.prop(\"response\").prop(\"userName\", userName);\n    \t}\n    \t\n    \treturn newQuestion.uri();\n    \t\n    }\n}"
+}

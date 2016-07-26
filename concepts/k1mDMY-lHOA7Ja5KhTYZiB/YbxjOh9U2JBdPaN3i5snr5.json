@@ -1,0 +1,30 @@
+{
+  "uri" : "local://YbxjOh9U2JBdPaN3i5snr5/",
+  "name" : "Study Response View",
+  "category" : "",
+  "parent" : "local://k1mDMY-lHOA7Ja5KhTYZiB/",
+  "flags" : "U",
+  "lvars" : [ ],
+  "vars" : [ {
+    "name" : "_studyReponseView_foo",
+    "expr" : {
+      "str" : "",
+      "strEditMode" : "",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "studyReponseView",
+    "expr" : {
+      "concept" : "/emci/emovera/3WmJ2tGahW8PuaADYHGpX1/",
+      "bindings" : {
+        "foo" : "_studyReponseView_foo"
+      },
+      "type" : "CONCEPT"
+    }
+  } ],
+  "isas" : [ {
+    "var" : "studyReponseView"
+  } ],
+  "encodedidxhash" : "",
+  "isLambda" : false
+}

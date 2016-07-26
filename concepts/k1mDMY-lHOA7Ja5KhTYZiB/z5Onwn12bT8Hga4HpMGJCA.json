@@ -1,0 +1,38 @@
+{
+  "uri" : "local://z5Onwn12bT8Hga4HpMGJCA/",
+  "name" : "Missing Word Report",
+  "category" : "",
+  "parent" : "local://k1mDMY-lHOA7Ja5KhTYZiB/",
+  "flags" : "U",
+  "lvars" : [ ],
+  "vars" : [ {
+    "name" : "htmlTemplate",
+    "expr" : {
+      "str" : "<html>\n    <head>\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"//fonts.googleapis.com/css?family=Raleway:300normal,400normal,600normal\" />\n        <link rel=\"stylesheet\" href=\"/resource/emci/emovera/H-2iBzOU8zA9UalxsPWkaB/\">\n\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"//cdn.datatables.net/1.10.0/css/jquery.dataTables.css\">\n        <link rel=\"stylesheet\" type=\"text/css\" href=\"//cdn.datatables.net/tabletools/2.2.3/css/dataTables.tableTools.css\">\n\n        <script type=\"text/javascript\" charset=\"utf8\" src=\"//cdn.datatables.net/1.10.0/js/jquery.dataTables.js\"></script>\n        <script type=\"text/javascript\" charset=\"utf8\" src=\"//cdn.datatables.net/tabletools/2.2.3/js/dataTables.tableTools.min.js\"></script>\n\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no\" />\n    </head>\n    \n    <body>\n        <div class=\"container-fluid\">\n            <div class=\"row text-center emci-header\">\n                <div class=\"col-sm-3 col-md-2 col-lg-1\">\n                </div>\n                <div class=\"col-sm-6 col-md-8 col-lg-10\">\n                    <div class=\"header-title\">\n                        Missing Word Report\n                    </div>\n                </div>\n            </div>\n            <div class=\"row text-center instructions\">\n                <div class=\"col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2\">\n                    <div class=\"instructions-text\" data-bind=\"text: instructionText\">\n                        This report shows words collected by the web-based data-collection tool that are missing in the Emotion Mining Dictionary. \n                    </div>\n                </div>\n            </div>\n            <div class=\"row text-center\">\n                <div class=\"col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2\" style=\"margin-top: 20px\">\n                    <table id=\"myTable\">\n                        <thead>\n                            <tr>\n                                <th>Original Word</th>\n                                <th>Frequency</th>\n                            </tr>\n                        </thead>\n                        <tbody>\n                        </tbody>\n                    </table>\n                </div>\n            </div>\n        </div>\n        \n        <script>\n        $(function() {\n            $.get(\"https://insights.emotionmining.com/resourcelocal://VSWcS8GaO48v-qOZD-wzaD/\", function(engDictTxt) {\n                var engDictJSON = _.object(_.map(engDictTxt.split('\\n'), function(x) { return [x.toLowerCase(), 0]; }));\n                $.getJSON('https://s.conceptjs.com/emovera/worddict.min.json', function(data) {\n                    dictJSON = data;\n    \n                    var table = $(\"#myTable\").DataTable( {\n                        \"lengthChange\": false,\n                        \"dom\": 'T<\"clear\">lfrtip',\n                        \"tableTools\": {\n                            \"sSwfPath\": \"//cdn.datatables.net/tabletools/2.2.3/swf/copy_csv_xls_pdf.swf\",\n                            \"aButtons\": [\n                            {'sExtends':'copy',\n                                \"oSelectorOpts\": { filter: 'applied', order: 'current' }\n                            },\n                            {'sExtends':'csv',\n                                \"oSelectorOpts\": { filter: 'applied', order: 'current' }\n                            },\n                            {'sExtends':'xls',\n                                \"oSelectorOpts\": { filter: 'applied', order: 'current' }\n                            },\n                            {'sExtends':'pdf',\n                                \"oSelectorOpts\": { filter: 'applied', order: 'current' }\n                            },\n                            {'sExtends':'print',\n                                \"oSelectorOpts\": { filter: 'applied', order: 'current' }\n                            }]\n                        },\n                        \"order\": [[1, \"desc\"]]\n                    });\n                \n                    console.log(\"Searching for words\");\n                    $cjs.search({\n                        uri: \"/emci/emovera/gDwDBSTAEZ8y0qRd_iBf3A/\",\n                        queryJson: {\n                            \"filtered\" : {\"filter\" : { \"term\" : { \"repo\" : \"/emci/enterprise/\" } } }\n                        },\n                        from: 0,\n                        size: 100000,\n                        done : function(data){\n                            var missingWords = {};\n                            _.each(data.hits.hits, function(x) {\n                                var originalWord = x._source.originalWord;\n                                var word = x._source.word;\n                                if (originalWord && word && (originalWord != word)) {\n                                    if (_.has(missingWords, originalWord)) {\n                                        missingWords[originalWord] = missingWords[originalWord] + 1;\n                                    } else {\n                                        missingWords[originalWord] = 1;\n                                    }\n                                }\n                            });\n                            _.mapObject(missingWords, function(val, key) {\n                                var dataRow = [];\n                                if (!_.has(dictJSON.words, key) && _.has(engDictJSON, key)) {\n                                    dataRow.push(key);\n                                    dataRow.push(val);\n                                    table.row.add(dataRow);\n                                }\n                            });\n                            table.draw();\n                        },\n                        fail : function(jqXHR, textStatus, errorThrown){\n                            console.log(\"failed to search feedback, response:\"+jqXHR.responseText);\n                        }\n                    });\n                });\n            });\n        });\n        </script>\n    </body>\n</html>",
+      "strEditMode" : "html",
+      "type" : "STRING"
+    }
+  }, {
+    "name" : "_page_propertyMap",
+    "expr" : {
+      "script" : "return {anchorUri: home.anchor().uri()};",
+      "type" : "SCRIPT"
+    }
+  }, {
+    "name" : "page",
+    "expr" : {
+      "concept" : "/common/core/Xfh2VQ4HSK9klqbqqR-eBB/",
+      "bindings" : {
+        "htmlTemplate" : "htmlTemplate",
+        "propertyMap" : "_page_propertyMap"
+      },
+      "type" : "CONCEPT"
+    }
+  } ],
+  "isas" : [ {
+    "var" : "page"
+  } ],
+  "encodedidxhash" : "",
+  "isLambda" : false,
+  "activeScript" : ""
+}
